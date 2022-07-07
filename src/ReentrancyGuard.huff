@@ -18,7 +18,7 @@
 }
 
 #define macro UNLOCK_1() = takes (0) returns (0) {
-    0x01
+    0x00
     [LOCK_SLOT]
     sstore
 }

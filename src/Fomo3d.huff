@@ -1,13 +1,47 @@
 #define function buyTickets(uint256) payable returns()
+#define function withdraw() nonpayable returns()
+#define function transferOwnership(address) nonpayable returns()
 
 #define constant END_TIME = FREE_STORAGE_POINTER()
-#define constant TOTAL_TICKETS = FREE_STORAGE_POINTER()
+#define constant OWNER = FREE_STORAGE_POINTER()
+#define constant TOTAL_TIX = FREE_STORAGE_POINTER()
 #define constant CURR_PRICE = FREE_STORAGE_POINTER()
+#define constant OWNER_TO_NUM_OF_TIX = FREE_STORAGE_POINTER()
+
+#define macro CONTSTRUCTOR() = takes (0) returns (0) {
+    //give initial tix price
+    //set owner
+    //maybe send owner shit ton of tix or let owner get their own pot
+    //end time = 24h hours from curr blocktimestamp
+}
+
+#define macro BUY_TIX() = takes (0) returns(0) {
+    [CURR_PRICE] sload
+    callvalue div   // [callvalue / current ticket price]
+    //update owner to num of tix
+    UPDATE_CURR_PRICE() //macro needs # of tix bought
+    //distribute funds
+    //adds time to end time
+    //updates every current ticket buyers 
+
+}
+
+#define macro UPDATE_CURR_PRICE() = takes (1) returns(0) {
+    //takes amount of tix bought and updates current price
+}
+
+#define macro UPDATE_END_TIME() = takes (1) returns(0) {
+
+    [END_TIME] sload
+
+}
+
 
 #define macro MAIN() = takes (0) returns (0) {
     0x00 calldataload 0xe0 shr
     dup1 /* */ eq buyTickets jumpi
 
     buyTickets:
+        BUY_TIX()
 
 }
