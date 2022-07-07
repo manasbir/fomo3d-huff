@@ -1,0 +1,21 @@
+#define function revertTest(uint256, uint256) pure returns (bool)
+
+#define macro REVERT_IF_NOT_EQUAL() = takes (0) returns (0) {
+    0x04 calldataload
+    0x24 calldataload
+    eq
+    if_equal jumpi
+    revert
+    
+    if_equal:
+    0x01 0x00 mstore
+    0x20 0x00 return
+}
+
+#define macro MAIN() = takes (0) returns (0) {
+    0x00 calldataload 0xe0 shr
+    dup1 0xc8fa9255 eq revertTest jumpi
+
+    revertTest:
+        REVERT_IF_NOT_EQUAL()
+}

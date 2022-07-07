@@ -1,8 +1,9 @@
 #define function buyTickets(uint256) payable returns()
-#define function withdraw() nonpayable returns()
-#define function transferOwnership(address) nonpayable returns()
+//#define function withdraw() nonpayable returns()
+//#define function transferOwnership(address) nonpayable returns()
 #define function currEndTime() view returns()
 #define function currPrice() view returns()
+#define function claim() nonpayable returns()
 
 #define constant END_TIME = FREE_STORAGE_POINTER()
 //block.timestamp to lock the contract
@@ -10,6 +11,7 @@
 #define constant TOTAL_TIX = FREE_STORAGE_POINTER()
 #define constant CURR_PRICE = FREE_STORAGE_POINTER()
 #define constant OWNER_TO_NUM_OF_TIX = FREE_STORAGE_POINTER()
+#define constant OWNER_TO_AMOUNT_OWED = FREE_STORAGE_POINTER()
 
 #define macro CONTSTRUCTOR() = takes (0) returns (0) {
     //give initial tix price
@@ -20,10 +22,25 @@
 
 #define macro BUY_TIX() = takes (0) returns(0) {
     //check if timer over
+    timestamp
+    [END_TIME] sload    // [end time, curr timestamp]
+    gt
+    time_not_over jumpi
+    //if timer over, then revert
+    0x00 0x00 revert //are the 0x00's even necessary?
+
+    time_not_over:
+
     [CURR_PRICE] sload
     callvalue div   // [callvalue / current ticket price]
-    //
+    // amount of tix bought
+    caller //msg.sender
+    0x00 mstore
+    
     //update owner to num of tix
+
+
+
     UPDATE_CURR_PRICE() //macro needs # of tix bought
     //distribute funds
     //adds time to end time
