@@ -1,8 +1,11 @@
 #define function buyTickets(uint256) payable returns()
 #define function withdraw() nonpayable returns()
 #define function transferOwnership(address) nonpayable returns()
+#define function currEndTime() view returns()
+#define function currPrice() view returns()
 
 #define constant END_TIME = FREE_STORAGE_POINTER()
+//block.timestamp to lock the contract
 #define constant OWNER = FREE_STORAGE_POINTER()
 #define constant TOTAL_TIX = FREE_STORAGE_POINTER()
 #define constant CURR_PRICE = FREE_STORAGE_POINTER()
@@ -16,8 +19,10 @@
 }
 
 #define macro BUY_TIX() = takes (0) returns(0) {
+    //check if timer over
     [CURR_PRICE] sload
     callvalue div   // [callvalue / current ticket price]
+    //
     //update owner to num of tix
     UPDATE_CURR_PRICE() //macro needs # of tix bought
     //distribute funds
@@ -28,11 +33,18 @@
 
 #define macro UPDATE_CURR_PRICE() = takes (1) returns(0) {
     //takes amount of tix bought and updates current price
+    //simple math i hope
 }
 
 #define macro UPDATE_END_TIME() = takes (1) returns(0) {
+    //need to check if current endtime <= block.timestamp + 24h
 
-    [END_TIME] sload
+    0x3e    // [tix bought, 30]
+    mul     // [tix bought * 30]
+    [END_TIME] sload    // [end time, amount it should increase by]
+    add     // [end time + amount it should increase by]
+    0x15180 // [24h, current endtime]
+
 
 }
 
