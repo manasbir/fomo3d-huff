@@ -6,16 +6,13 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 import "forge-std/Vm.sol";
 
-contract SimpleStoreTest is Test {
-    /// @dev Address of the SimpleStore contract.  
+contract SimpleStoreTest is Test { 
     RevertTest public revertTest;
 
-    /// @dev Setup the testing environment.
     function setUp() public {
         revertTest = RevertTest(HuffDeployer.deploy("RevertTest"));
     }
 
-    /// @dev Ensure that you can set and get the value.
     function testIfReverts() public {
         assertEq(revertTest.revertTest(3, 3), true);
         vm.expectRevert();
