@@ -6,7 +6,7 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 import "forge-std/Vm.sol";
 
-contract SimpleStoreTest is Test { 
+contract RevertTestTest is Test { 
     RevertTest public revertTest;
 
     function setUp() public {
