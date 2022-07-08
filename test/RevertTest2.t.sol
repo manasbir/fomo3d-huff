@@ -10,10 +10,10 @@ contract RevertTestTest is Test {
     RevertTest public revertTest;
 
     function setUp() public {
-        revertTest = RevertTest(HuffDeployer.deploy("RevertTest"));
+        revertTest = RevertTest(HuffDeployer.deploy("RevertTest2"));
     }
 
-    function testIfReverts1() public {
+    function testIfReverts2() public {
         vm.expectRevert();
         revertTest.revertTest(3, 3);
         /* vm.expectRevert();

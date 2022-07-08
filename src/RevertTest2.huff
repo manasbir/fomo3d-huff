@@ -5,10 +5,10 @@
     0x24 calldataload   // [num2]
     eq  // [is_equal]
     if_equal jumpi
-    revert
+    0x00 0x00 revert
     
     if_equal:
-    revert
+    0x00 0x00 revert
     0x01 0x00 mstore    // returns true
     0x20 0x00 return
 }

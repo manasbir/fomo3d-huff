@@ -27,7 +27,7 @@
     gt
     time_not_over jumpi
     //if timer over, then revert
-    0x00 0x00 revert //are the 0x00's even necessary?
+    revert //are the 0x00's even necessary? no
 
     time_not_over:
 
@@ -36,7 +36,7 @@
     // amount of tix bought
     caller //msg.sender
     0x00 mstore
-    
+
     //update owner to num of tix
 
 
