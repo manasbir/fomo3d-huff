@@ -1,11 +1,11 @@
 #define function buyTickets(uint256) payable returns()
-//#define function withdraw() nonpayable returns()
-//#define function transferOwnership(address) nonpayable returns()
 #define function currEndTime() view returns()
 #define function currPrice() view returns()
 #define function claim() nonpayable returns()
+//getter functions
 
 #define constant END_TIME = FREE_STORAGE_POINTER()
+#define constant START_TIME = FREE_STORAGE_POINTER()
 //block.timestamp to lock the contract
 #define constant OWNER = FREE_STORAGE_POINTER()
 #define constant TOTAL_TIX = FREE_STORAGE_POINTER()
@@ -13,6 +13,9 @@
 #define constant OWNER_TO_NUM_OF_TIX = FREE_STORAGE_POINTER()
 #define constant OWNER_TO_AMOUNT_OWED = FREE_STORAGE_POINTER()
 #define constant LAST_PURCHASER = FREE_STORAGE_POINTER()
+
+//event sigs
+//tix bought
 
 #define macro CONTSTRUCTOR() = takes (0) returns (0) {
     //give initial tix price in wei
