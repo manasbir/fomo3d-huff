@@ -36,6 +36,7 @@ contract Fomo3dsol {
 
     function updateTixPrice() internal {
         //just steal fomo2d's code for this :)
+        // :(
     }
 
     function claim() public {

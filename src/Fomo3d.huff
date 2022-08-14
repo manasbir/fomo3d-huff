@@ -1,41 +1,59 @@
+//interface
 #define function buyTickets(uint256) payable returns()
-#define function currEndTime() view returns()
-#define function currPrice() view returns()
+// could implement a buyTickets(uint256 _amountOfTix, uint256 _pricePerTix) and add a require statement but
+// that seems weird
 #define function claim() nonpayable returns()
 //getter functions
+#define function currEndTime() view returns()
+#define function currPrice() view returns()
 
 #define constant END_TIME = FREE_STORAGE_POINTER()
+//could just be a bool if in round
 #define constant START_TIME = FREE_STORAGE_POINTER()
 //block.timestamp to lock the contract
 #define constant OWNER = FREE_STORAGE_POINTER()
 #define constant TOTAL_TIX = FREE_STORAGE_POINTER()
 #define constant CURR_PRICE = FREE_STORAGE_POINTER()
 #define constant OWNER_TO_NUM_OF_TIX = FREE_STORAGE_POINTER()
+//wont need if users get airdropped instead of manual claims
 #define constant OWNER_TO_AMOUNT_OWED = FREE_STORAGE_POINTER()
 #define constant LAST_PURCHASER = FREE_STORAGE_POINTER()
 
 //event sigs
+
+
 //tix bought
 
-#define macro CONTSTRUCTOR() = takes (0) returns (0) {
+#define macro CONSTRUCTOR() = takes (0) returns (0) {
     //give initial tix price in wei
+    0x38D7EA4C68000//0.001 ether
+    [CURR_PRICE]
+    sstore
     //set owner
-    //maybe send owner shit ton of tix or let owner get their own pot
-    //or none of the above
+    caller
+    [OWNER]
+    sstore
     //end time = 24h hours from curr blocktimestamp
+    0x86400 //24h
+    timestamp
+    add
+    [END_TIME]
+    sstore
 }
 
 #define macro BUY_TIX() = takes (0) returns(0) {
-    //[CURR_PRICE] sload  // if it gonna revert and they waste gas its not my problem
     //check if timer over
     [END_TIME] sload // use for later when updating end time
-    timestamp
-    dup2    // [end time, curr timestamp, end time, curr price]
-    gt
+    timestamp   // [timestamp, end time]
+    dup2    // [end time, curr timestamp, end time]
+    gt      // if_end_time > curr_time, end_time
     time_not_over jumpi
-    //if timer over, then revert
+    //if timer over, send all money to last purchaser
+    //set a new end time
+    //set a new start time
     selfbalance//idk how to distribute last ticket here
-    revert //are the 0x00's even necessary? no
+    [LAST_PURCHASER]
+    sload   //  [last purchaser, balance]
 
     time_not_over:
     //update time first because it at top of stack
@@ -89,7 +107,7 @@
 
 #define macro MAIN() = takes (0) returns (0) {
     0x00 calldataload 0xe0 shr
-    dup1 /* */ eq buyTickets jumpi
+    dup1 __FUNC_SIG() eq buyTickets jumpi
 
     buyTickets:
         BUY_TIX()
