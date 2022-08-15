@@ -48,6 +48,8 @@
     dup2    // [end time, curr timestamp, end time]
     gt      // if_end_time > curr_time, end_time
     time_not_over jumpi
+
+    
     //if timer over, send all money to last purchaser
     //set a new end time
     //set a new start time
@@ -106,10 +108,5 @@
 
 
 #define macro MAIN() = takes (0) returns (0) {
-    0x00 calldataload 0xe0 shr
-    dup1 __FUNC_SIG() eq buyTickets jumpi
-
-    buyTickets:
-        BUY_TIX()
 
 }
