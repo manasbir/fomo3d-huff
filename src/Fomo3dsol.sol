@@ -47,5 +47,8 @@ contract Fomo3dsol {
     function updateAmountOwed() internal {
         // most complicated part of the contract
         // and hardest to optimize
+        //could do iterable mapping
+        //could do epochs
+        //could just calculate per person when they claim
     }
 }
